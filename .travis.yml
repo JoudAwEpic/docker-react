@@ -8,3 +8,18 @@ before_install:
 
 script:
   - docker run -e CI=true thejoud1997/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "Dockerreact-env"
+  # travis zip your files and upload them to s3 so in order to do that
+  # we have to define a bucket_name
+  bucket_name: "elasticbeanstalk-us-east-2-508786416615"
+  # the name of the folder that hosts your project in the S3 ===> it should be the name of the application in the "app" ==> docker-react
+  bucket_path: "docker-react"
+  on:
+    branch: main
+  access_key_id: $ACCESS_KEY
+  secret_access_key: $SECRET_KEY
